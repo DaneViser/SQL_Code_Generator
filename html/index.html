@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .new-class {
+            display: inherit;
+            margin: 12px;
+            transition: opacity 0.8s ease-in; /* Define transition for opacity */
+
+        }
+        .hidden {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+
+        }
+        #columns{
+            width: fit-content;
+            height: fit-content;
+            font-size: 24px;
+        }
+        button{
+            width: fit-content;
+            height: fit-content;
+            font-size: 24px;
+        }
+        input{
+            width: fit-content;
+            height: fit-content;
+            font-size: 24px;
+        }
+        textarea{
+            font-size: 24px;
+        }
+        #counter{
+            width: fit-content;
+            height: fit-content;
+            font-size: 24px;
+        }
+        #myTable{
+            border:2px solid black;
+            transition: opacity 0.5s ease-in; /* Define transition for opacity */
+
+        }
+        th{
+            border-right: 2px solid red;
+            margin: 4px;
+        }
+        th:is(:last-child), td:is(:last-child) {
+            border-right: none; /* Remove right border for last column */
+        }
+
+    </style>
+</head>
+<body>
+    <button id="btnSchGen" onclick="showDiv(this);" class="mainButton">Schema Creator</button>
+    <button id="btnSqlGen" onclick="showDiv(this);" class="mainButton">SQL Generator</button>
+    <div id="sqlSchemaGenerator" style="display: none;"> MUDA </div>
+    <div id="sqlGeneratorDiv" style="display: none;">
+        <button type="button" onclick="backToMainMenu();" class="new-class">Back</button>
+        
+        <input id="tblInput" type="text" placeholder="Enter Table Name" class="new-class">
+        <input id="colInput" type="text" placeholder="Enter Column Name" class="new-class">
+        <input id="typeInput" type="text" placeholder="Enter Type {default:string}" class="new-class">
+        <button type="button" onclick="addColumnFinal();" class="new-class">Add</button>
+        <div id="tableDiv" class="new-class">
+            <table id="myTable"><caption id="myCaption"></caption><thead><tr id="myCol"></tr></thead></table>
+        </div>
+        <button type="button" onclick="processTableColumns();" class="new-class">OK</button>
+        <button type="button" onclick="hideShowElements();" class="hidden">Back</button>
+        <label for="columns" class="hidden">Select a column to add possible values:</label>
+        <select id="columns" class="hidden"></select>
+        <label for="curCol" class="hidden">Enter possible values for the selected column</label>
+        <input id="curCol" placeholder="Enter Values" class="hidden">
+        <button id="btnSaveVal" onclick="addValuesToColumn()" class="hidden">Save Values</button>
+        <select id="counter" class="hidden">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        <button id="btngenerateSql" type="button" onclick="generateSqlCode();" class="hidden">Generate SQL Code</button>
+    </div>
+    <div id="txtDiv">
+        <div name="sqlcode" id="sqlcode" style="display:none; width: fit-content; height: 400px; overflow-y: scroll;"></textarea>
+    </div>
+
+<script src="../scripts/functions.js"></script>
+<script>
+    function showDiv(obj){
+        if(obj.id === 'btnSqlGen'){
+            document.getElementById('sqlGeneratorDiv').style.display = 'inherit';
+            hideButtons();
+        }
+        else if (obj.id === 'btnSchGen'){
+            document.getElementById('sqlSchemaGenerator').style.display = 'inherit';
+            hideButtons();
+        }
+    }
+    function hideAllDivs(){
+        document.getElementById('sqlGeneratorDiv').style.display = 'none';
+        document.getElementById('sqlSchemaGenerator').style.display = 'none';
+        showButtons();
+    }
+
+    function hideButtons(){
+        const elements = document.querySelectorAll('.mainButton');
+            elements.forEach(element => {
+            element.style.display = 'none';
+            });
+    }
+
+    function showButtons(){
+        const elements = document.querySelectorAll('.mainButton');
+            elements.forEach(element => {
+            element.style.display = 'inline-block';
+            });
+    }
+
+    function backToMainMenu(){
+        resetGlobalVars(); // Called from functions.js
+        hideAllDivs();
+    }
+</script>
+</body>
+</html> 
